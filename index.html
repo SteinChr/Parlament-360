@@ -61,45 +61,39 @@ body{
             'fralos':{'name': 'Fraktionslose', 'colour': 'rgba(204, 204, 204, A)'}
         }
 
-        var data = [
+        var data1 = [
             {'party': 'evp', 'value': '1'},
             {'party': 'sd', 'value': '3'},
             {'party': 'renew', 'value': '5'},
             {'party': 'efa', 'value': '4'},
             {'party': 'id', 'value': '2'},
             {'party': 'ekr', 'value': '4'},
+            {'party': 'gue', 'value': '7'},
+            {'party': 'fralos', 'value': '6'}
+        ]
+
+        var data2 = [
+            {'party': 'evp', 'value': '15'},
+            {'party': 'sd', 'value': '32'},
+            {'party': 'renew', 'value': '64'},
+            {'party': 'efa', 'value': '78'},
+            {'party': 'id', 'value': '9'},
+            {'party': 'ekr', 'value': '100'},
+            {'party': 'gue', 'value': '50'},
+            {'party': 'fralos', 'value': '14'}
         ]
         
         var ctx = document.getElementById('myChart').getContext('2d');
         var myChart = new Chart(ctx, {
             type: 'bar',
             data: {
-            //labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-            labels: data.map(function(item){return item.name;}),
+            labels: data1.map(function(item){return parties[item.party].name;}),
             datasets: [{
                 label: '# of Votes',
-                //data: [12, 19, 3, 5, 2, 3],
-                data: data.map(function(item){return item.value;}),
-                backgroundColor: data.map(function(item){return item.colour.replace('A', '0.7');}),
-                borderColor: data.map(function(item){return item.colour.replace('A', '1');}),
+                data: data1.map(function(item){return item.value;}),
+                backgroundColor: data1.map(function(item){return parties[item.party].colour.replace('A', '0.7');}),
+                borderColor: data1.map(function(item){return parties[item.party].colour.replace('A', '1');}),
 
-                /*
-                backgroundColor: [
-                    'rgba(255, 99, 132, 0.2)',
-                    'rgba(54, 162, 235, 0.2)',
-                    'rgba(255, 206, 86, 0.2)',
-                    'rgba(75, 192, 192, 0.2)',
-                    'rgba(153, 102, 255, 0.2)',
-                    'rgba(255, 159, 64, 0.2)'
-                ],
-                borderColor: [
-                    'rgba(255, 99, 132, 1)',
-                    'rgba(54, 162, 235, 1)',
-                    'rgba(255, 206, 86, 1)',
-                    'rgba(75, 192, 192, 1)',
-                    'rgba(153, 102, 255, 1)',
-                    'rgba(255, 159, 64, 1)'
-                ],*/
                 borderWidth: 1
             }]
             },
@@ -120,32 +114,12 @@ body{
         var myChart2 = new Chart(ctx2, {
             type: 'bar',
             data: {
-            //labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-            labels: data.map(function(item){return item.name;}),
+            labels: data2.map(function(item){return parties[item.party].name;}),
             datasets: [{
                 label: '# of Votes',
-                //data: [12, 19, 3, 5, 2, 3],
-                data: data.map(function(item){return item.value;}),
-                backgroundColor: data.map(function(item){return item.colour.replace('A', '0.7');}),
-                borderColor: data.map(function(item){return item.colour.replace('A', '1');}),
-
-                /*
-                backgroundColor: [
-                    'rgba(255, 99, 132, 0.2)',
-                    'rgba(54, 162, 235, 0.2)',
-                    'rgba(255, 206, 86, 0.2)',
-                    'rgba(75, 192, 192, 0.2)',
-                    'rgba(153, 102, 255, 0.2)',
-                    'rgba(255, 159, 64, 0.2)'
-                ],
-                borderColor: [
-                    'rgba(255, 99, 132, 1)',
-                    'rgba(54, 162, 235, 1)',
-                    'rgba(255, 206, 86, 1)',
-                    'rgba(75, 192, 192, 1)',
-                    'rgba(153, 102, 255, 1)',
-                    'rgba(255, 159, 64, 1)'
-                ],*/
+                data: data2.map(function(item){return item.value;}),
+                backgroundColor: data2.map(function(item){return parties[item.party].colour.replace('A', '0.7');}),
+                borderColor: data2.map(function(item){return parties[item.party].colour.replace('A', '1');}),
                 borderWidth: 1
             }]
             },
