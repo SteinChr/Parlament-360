@@ -43,21 +43,77 @@ body{
 
     
         <div style="width: 500px"><canvas id="myChart" width="400" height="400"></canvas></div>
+        <div style="width: 500px"><canvas id="myChart2" width="400" height="400"></canvas></div>
         <script>
 
+        var parties = {
+            'evp':{'name': 'EVP', 'colour': 'rgba(51, 153, 255, A)'},
+            'sd':{'name': 'S&D', 'colour': 'rgba(255, 0, 0, A)'},
+            'renew':{'name': 'Renew', 'colour': 'rgba(255, 255, 0, A)'},
+            'efa':{'name': 'Grüne/EFA', 'colour': 'rgba(0, 153, 0, A)'},
+            'id':{'name': 'ID', 'colour': 'rgba(0, 0, 0, A)'},
+            'ekr':{'name': 'EKR', 'colour': 'rgba(0, 0, 255, A)'},
+            'gue':{'name': 'GUE-NGL', 'colour': 'rgba(153, 0, 0, A)'},
+            'fralos':{'name': 'Fraktionslose', 'colour': 'rgba(204, 204, 204, A)'}
+        }
+
         var data = [
-            {'name': 'EVP', 'value': 1, 'colour': 'rgba(51, 153, 255, A)'},
-            {'name': 'S&D', 'value': 1, 'colour': 'rgba(255, 0, 0, A)'},
-            {'name': 'Renew', 'value': 3, 'colour': 'rgba(255, 255, 0, A)'},
-            {'name': 'Grüne/EFA', 'value': 5, 'colour': 'rgba(0, 153, 0, A)'},
-            {'name': 'ID', 'value': 3, 'colour': 'rgba(0, 0, 0, A)'},
-            {'name': 'EKR', 'value': 15, 'colour': 'rgba(0, 0, 255, A)'},
-            {'name': 'GUE-NGL', 'value': 15, 'colour': 'rgba(153, 0, 0, A)'},
-            {'name': 'Fraktionslose', 'value': 15, 'colour': 'rgba(204, 204, 204, A)'}
+            {'party': 'evp', 'value': '1'},
+            {'party': 'sd', 'value': '3'},
+            {'party': 'renew', 'value': '5'},
+            {'party': 'efa', 'value': '4'},
+            {'party': 'id', 'value': '2'},
+            {'party': 'ekr', 'value': '4'},
         ]
         
         var ctx = document.getElementById('myChart').getContext('2d');
         var myChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+            //labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+            labels: data.map(function(item){return item.name;}),
+            datasets: [{
+                label: '# of Votes',
+                //data: [12, 19, 3, 5, 2, 3],
+                data: data.map(function(item){return item.value;}),
+                backgroundColor: data.map(function(item){return item.colour.replace('A', '0.7');}),
+                borderColor: data.map(function(item){return item.colour.replace('A', '1');}),
+
+                /*
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(255, 206, 86, 0.2)',
+                    'rgba(75, 192, 192, 0.2)',
+                    'rgba(153, 102, 255, 0.2)',
+                    'rgba(255, 159, 64, 0.2)'
+                ],
+                borderColor: [
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(153, 102, 255, 1)',
+                    'rgba(255, 159, 64, 1)'
+                ],*/
+                borderWidth: 1
+            }]
+            },
+
+            
+                        options: {
+                            scales: {
+                                yAxes: [{
+                                    ticks: {
+                                        beginAtZero: true
+                                    }
+                                }]
+                            }
+                        }
+                    });
+
+                    var ctx2 = document.getElementById('myChart2').getContext('2d');
+        var myChart2 = new Chart(ctx2, {
             type: 'bar',
             data: {
             //labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
