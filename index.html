@@ -13,11 +13,22 @@
 
             <div style="width: 500px"><canvas id="myChart" width="400" height="400"></canvas></div>
             <script>
+
+            var data = [
+                {'name': 'Red', 'value': 1},
+                {'name': 'Blue', 'value': 1},
+                {'name': 'Yellow', 'value': 3},
+                {'name': 'Green', 'value': 5},
+                {'name': 'Purlple', 'value': 3},
+                {'name': 'Orange', 'value': 15}
+            ]
+            
             var ctx = document.getElementById('myChart').getContext('2d');
             var myChart = new Chart(ctx, {
                 type: 'bar',
                 data: {
-                    labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+                    //labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+                    labels: data.map(function(item){return item.name;}),
                     datasets: [{
                         label: '# of Votes',
                         data: [12, 19, 3, 5, 2, 3],
