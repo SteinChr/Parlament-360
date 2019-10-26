@@ -59,7 +59,7 @@ body{
             'ekr':{'name': 'EKR', 'colour': 'rgba(0, 0, 255, A)'},
             'gue':{'name': 'GUE-NGL', 'colour': 'rgba(153, 0, 0, A)'},
             'fralos':{'name': 'Fraktionslose', 'colour': 'rgba(204, 204, 204, A)'}
-        }
+        };
 
         var data1 = [
             {'party': 'evp', 'value': '1'},
@@ -70,7 +70,7 @@ body{
             {'party': 'ekr', 'value': '4'},
             {'party': 'gue', 'value': '7'},
             {'party': 'fralos', 'value': '6'}
-        ]
+        ];
 
         var data2 = [
             {'party': 'evp', 'value': '15'},
@@ -81,7 +81,18 @@ body{
             {'party': 'ekr', 'value': '100'},
             {'party': 'gue', 'value': '50'},
             {'party': 'fralos', 'value': '14'}
-        ]
+        ];
+
+        var data3 = [
+            {'party': 'evp', 'value': '42'},
+            {'party': 'sd', 'value': '23'},
+            {'party': 'renew', 'value': '74'},
+            {'party': 'efa', 'value': '82'},
+            {'party': 'id', 'value': '67'},
+            {'party': 'ekr', 'value': '3'},
+            {'party': 'gue', 'value': '21'},
+            {'party': 'fralos', 'value': '88'}
+        ];
         
         var ctx = document.getElementById('myChart').getContext('2d');
         var myChart = new Chart(ctx, {
@@ -89,10 +100,24 @@ body{
             data: {
             labels: data1.map(function(item){return parties[item.party].name;}),
             datasets: [{
-                label: '# of Votes',
+                label: 'Dafür',
                 data: data1.map(function(item){return item.value;}),
-                backgroundColor: data1.map(function(item){return parties[item.party].colour.replace('A', '0.7');}),
+                backgroundColor: data1.map(function(item){return parties[item.party].colour.replace('A', '0.9');}),
                 borderColor: data1.map(function(item){return parties[item.party].colour.replace('A', '1');}),
+
+                borderWidth: 1
+            },{
+                label: 'Dagegen',
+                data: data2.map(function(item){return item.value;}),
+                backgroundColor: data2.map(function(item){return parties[item.party].colour.replace('A', '0.6');}),
+                borderColor: data2.map(function(item){return parties[item.party].colour.replace('A', '1');}),
+
+                borderWidth: 1
+            },{
+                label: 'Enthaltung',
+                data: data3.map(function(item){return item.value;}),
+                backgroundColor: data3.map(function(item){return parties[item.party].colour.replace('A', '0.3');}),
+                borderColor: data3.map(function(item){return parties[item.party].colour.replace('A', '1');}),
 
                 borderWidth: 1
             }]
@@ -101,10 +126,13 @@ body{
             
                         options: {
                             scales: {
+                                xAxes: [{
+                                    stacked:true,
+                                    
+                                }],
                                 yAxes: [{
-                                    ticks: {
-                                        beginAtZero: true
-                                    }
+                                    stacked:true,
+                                    
                                 }]
                             }
                         }
