@@ -41,18 +41,19 @@ body{
     </h2>
 
 
+<<<<<<< Updated upstream
 
         <p>
             Fülltext 1
         </p>
+=======
+    
+>>>>>>> Stashed changes
         <div style="width: 500px"><canvas id="myChart" width="400" height="400"></canvas></div>
-        <p>
-            Fülltext 2
-        </p>
         <div style="width: 500px"><canvas id="myChart2" width="400" height="400"></canvas></div>
         <p>
             Copyright Jugend Hackt 2019; 
-            Design und Programmierung von: Christian, Yusuf und Viktor.
+            Erstellt von: Christian, Yusuf und Viktor.
         </p>
         <script>
 
@@ -169,49 +170,7 @@ body{
             {'party': 'fralos', 'value': '55'}
         ];
         
-        var ctx = document.getElementById('myChart').getContext('2d');
-        var myChart = new Chart(ctx, {
-            type: 'bar',
-            data: {
-            labels: data1.map(function(item){return parties[item.party].name;}),
-            datasets: [{
-                label: 'Dafür',
-                data: data1.map(function(item){return item.value;}),
-                backgroundColor: data1.map(function(item){return parties[item.party].colour.replace('A', '0.9');}),
-                borderColor: data1.map(function(item){return parties[item.party].colour.replace('A', '1');}),
-
-                borderWidth: 1
-            },{
-                label: 'Dagegen',
-                data: data2.map(function(item){return item.value;}),
-                backgroundColor: data2.map(function(item){return parties[item.party].colour.replace('A', '0.6');}),
-                borderColor: data2.map(function(item){return parties[item.party].colour.replace('A', '1');}),
-
-                borderWidth: 1
-            },{
-                label: 'Enthaltung',
-                data: data3.map(function(item){return item.value;}),
-                backgroundColor: data3.map(function(item){return parties[item.party].colour.replace('A', '0.3');}),
-                borderColor: data3.map(function(item){return parties[item.party].colour.replace('A', '1');}),
-
-                borderWidth: 1
-            }]
-            },
-
-            
-                        options: {
-                            scales: {
-                                xAxes: [{
-                                    stacked:true,
-                                    
-                                }],
-                                yAxes: [{
-                                    stacked:true,
-                                    
-                                }]
-                            }
-                        }
-                    });
+       
 
                     var ctx2 = document.getElementById('myChart2').getContext('2d');
         var myChart2 = new Chart(ctx2, {
@@ -248,10 +207,57 @@ body{
                                 }],
                                 yAxes: [{
                                     stacked:true,
+                                    
                                 }]
                             }
                         }
                     });
+
+function createDiagram(dataDafuer, dataDagegen, dataEnthaltung) {
+    var ctx = document.getElementById('myChart').getContext('2d');
+        var myChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+            labels: dataDafuer.map(function(item){return parties[item.party].name;}),
+            datasets: [{
+                label: 'Dafür',
+                data: dataDafuer.map(function(item){return item.value;}),
+                backgroundColor: dataDafuer.map(function(item){return parties[item.party].colour.replace('A', '0.9');}),
+                borderColor: dataDafuer.map(function(item){return parties[item.party].colour.replace('A', '1');}),
+
+                borderWidth: 1
+            },{
+                label: 'Dagegen',
+                data: dataDagegen.map(function(item){return item.value;}),
+                backgroundColor: dataDagegen.map(function(item){return parties[item.party].colour.replace('A', '0.6');}),
+                borderColor: dataDagegen.map(function(item){return parties[item.party].colour.replace('A', '1');}),
+
+                borderWidth: 1
+            },{
+                label: 'Enthaltung',
+                data: dataEnthaltung.map(function(item){return item.value;}),
+                backgroundColor: dataEnthaltung.map(function(item){return parties[item.party].colour.replace('A', '0.3');}),
+                borderColor: dataEnthaltung.map(function(item){return parties[item.party].colour.replace('A', '1');}),
+
+                borderWidth: 1
+            }]
+            },
+
+            
+                        options: {
+                            scales: {
+                                xAxes: [{
+                                    stacked:true,
+                                    
+                                }],
+                                yAxes: [{
+                                    stacked:true,
+                                }]
+                            }
+                        }
+                    });
+}
+
                     </script>
 
 
