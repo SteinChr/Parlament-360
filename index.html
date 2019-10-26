@@ -1,4 +1,6 @@
 <!DOCTYPE html>
+<html>
+<head>
 <meta charset="utf-8">
 <style>
     h1{
@@ -17,25 +19,14 @@ body{
     margin:50px auto;
     background-color: lightcyan;
 }
-path {  stroke: #fff; }
-path:hover {  opacity:0.9; }
-rect:hover {  fill:blue; }
-.axis {  font: 10px sans-serif; }
-.legend tr{    border-bottom:1px solid grey; }
-.legend tr:first-child{    border-top:1px solid grey; }
+
 </style>
-<html>
-    <head>
+
+    
     <meta charset="utf-8">
 
     <!-- Load d3.js -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.bundle.min.js"></script>
-
-    </head>
-
-    <body>
-        
-<head>
     <title> Parlament 360.net</title>
 </head>
 <body>
@@ -49,63 +40,63 @@ rect:hover {  fill:blue; }
         Die Grafik
     </h2>
 
-        <div style="width: 500px"><canvas id="myChart" width="400" height="400"></canvas></div>
-        <script>
+            <div style="width: 500px"><canvas id="myChart" width="400" height="400"></canvas></div>
+            <script>
 
-        var data = [
-            {'name': 'Red', 'value': 1, 'colour': 'rgba(255, 99, 132, A)'},
-            {'name': 'Blue', 'value': 1, 'colour': 'rgba(54, 162, 235, A)'},
-            {'name': 'Yellow', 'value': 3, 'colour': 'rgba(255, 206, 86, A)'},
-            {'name': 'Green', 'value': 5, 'colour': 'rgba(75, 192, 192, A)'},
-            {'name': 'Purlple', 'value': 3, 'colour': 'rgba(153, 102, 255, A)'},
-            {'name': 'Orange', 'value': 15, 'colour': 'rgba(255, 159, 64, A)'}
-        ]
-        
-        var ctx = document.getElementById('myChart').getContext('2d');
-        var myChart = new Chart(ctx, {
-            type: 'bar',
-            data: {
-            //labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-            labels: data.map(function(item){return item.name;}),
-            datasets: [{
-                label: '# of Votes',
-                //data: [12, 19, 3, 5, 2, 3],
-                data: data.map(function(item){return item.value;}),
-                backgroundColor: data.map(function(item){return item.colour.replace('A', '0.2');}),
-                borderColor: data.map(function(item){return item.colour.replace('A', '1');}),
-
-                /*
-                backgroundColor: [
-                    'rgba(255, 99, 132, 0.2)',
-                    'rgba(54, 162, 235, 0.2)',
-                    'rgba(255, 206, 86, 0.2)',
-                    'rgba(75, 192, 192, 0.2)',
-                    'rgba(153, 102, 255, 0.2)',
-                    'rgba(255, 159, 64, 0.2)'
-                ],
-                borderColor: [
-                    'rgba(255, 99, 132, 1)',
-                    'rgba(54, 162, 235, 1)',
-                    'rgba(255, 206, 86, 1)',
-                    'rgba(75, 192, 192, 1)',
-                    'rgba(153, 102, 255, 1)',
-                    'rgba(255, 159, 64, 1)'
-                ],*/
-                borderWidth: 1
-            }]
-            },
-
-            options: {
-                scales: {
-                    yAxes: [{
-                        ticks: {
-                            beginAtZero: true
+                    var data = [
+                        {'name': 'Red', 'value': 1, 'colour': 'rgba(255, 99, 132, A)'},
+                        {'name': 'Blue', 'value': 1, 'colour': 'rgba(54, 162, 235, A)'},
+                        {'name': 'Yellow', 'value': 3, 'colour': 'rgba(255, 206, 86, A)'},
+                        {'name': 'Green', 'value': 5, 'colour': 'rgba(75, 192, 192, A)'},
+                        {'name': 'Purlple', 'value': 3, 'colour': 'rgba(153, 102, 255, A)'},
+                        {'name': 'Orange', 'value': 15, 'colour': 'rgba(255, 159, 64, A)'}
+                    ]
+                    
+                    var ctx = document.getElementById('myChart').getContext('2d');
+                    var myChart = new Chart(ctx, {
+                        type: 'bar',
+                        data: {
+                        //labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+                        labels: data.map(function(item){return item.name;}),
+                        datasets: [{
+                            label: '# of Votes',
+                            //data: [12, 19, 3, 5, 2, 3],
+                            data: data.map(function(item){return item.value;}),
+                            backgroundColor: data.map(function(item){return item.colour.replace('A', '0.2');}),
+                            borderColor: data.map(function(item){return item.colour.replace('A', '1');}),
+            
+                            /*
+                            backgroundColor: [
+                                'rgba(255, 99, 132, 0.2)',
+                                'rgba(54, 162, 235, 0.2)',
+                                'rgba(255, 206, 86, 0.2)',
+                                'rgba(75, 192, 192, 0.2)',
+                                'rgba(153, 102, 255, 0.2)',
+                                'rgba(255, 159, 64, 0.2)'
+                            ],
+                            borderColor: [
+                                'rgba(255, 99, 132, 1)',
+                                'rgba(54, 162, 235, 1)',
+                                'rgba(255, 206, 86, 1)',
+                                'rgba(75, 192, 192, 1)',
+                                'rgba(153, 102, 255, 1)',
+                                'rgba(255, 159, 64, 1)'
+                            ],*/
+                            borderWidth: 1
+                        }]
+                        },
+            
+                        options: {
+                            scales: {
+                                yAxes: [{
+                                    ticks: {
+                                        beginAtZero: true
+                                    }
+                                }]
+                            }
                         }
-                    }]
-                }
-            }
-        });
-        </script>
+                    });
+                    </script>
 
 
     </body>
