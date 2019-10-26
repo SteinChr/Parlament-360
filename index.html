@@ -93,6 +93,39 @@ body{
             {'party': 'gue', 'value': '21'},
             {'party': 'fralos', 'value': '88'}
         ];
+
+        var data4 = [
+            {'party': 'evp', 'value': '23'},
+            {'party': 'sd', 'value': '32'},
+            {'party': 'renew', 'value': '53'},
+            {'party': 'efa', 'value': '98'},
+            {'party': 'id', 'value': '1'},
+            {'party': 'ekr', 'value': '19'},
+            {'party': 'gue', 'value': '27'},
+            {'party': 'fralos', 'value': '33'}
+        ];
+
+        var data5 = [
+            {'party': 'evp', 'value': '88'},
+            {'party': 'sd', 'value': '87'},
+            {'party': 'renew', 'value': '86'},
+            {'party': 'efa', 'value': '23'},
+            {'party': 'id', 'value': '20'},
+            {'party': 'ekr', 'value': '9'},
+            {'party': 'gue', 'value': '3'},
+            {'party': 'fralos', 'value': '12'}
+        ];
+
+        var data6 = [
+            {'party': 'evp', 'value': '13'},
+            {'party': 'sd', 'value': '24'},
+            {'party': 'renew', 'value': '45'},
+            {'party': 'efa', 'value': '53'},
+            {'party': 'id', 'value': '51'},
+            {'party': 'ekr', 'value': '30'},
+            {'party': 'gue', 'value': '21'},
+            {'party': 'fralos', 'value': '55'}
+        ];
         
         var ctx = document.getElementById('myChart').getContext('2d');
         var myChart = new Chart(ctx, {
@@ -142,12 +175,24 @@ body{
         var myChart2 = new Chart(ctx2, {
             type: 'bar',
             data: {
-            labels: data2.map(function(item){return parties[item.party].name;}),
+            labels: data1.map(function(item){return parties[item.party].name;}),
             datasets: [{
-                label: '# of Votes',
-                data: data2.map(function(item){return item.value;}),
-                backgroundColor: data2.map(function(item){return parties[item.party].colour.replace('A', '0.7');}),
-                borderColor: data2.map(function(item){return parties[item.party].colour.replace('A', '1');}),
+                label: 'Dafür',
+                data: data4.map(function(item){return item.value;}),
+                backgroundColor: data4.map(function(item){return parties[item.party].colour.replace('A', '0.9');}),
+                borderColor: data4.map(function(item){return parties[item.party].colour.replace('A', '1');}),
+                borderWidth: 1
+            },{
+                label: 'Dagegen',
+                data: data5.map(function(item){return item.value;}),
+                backgroundColor: data5.map(function(item){return parties[item.party].colour.replace('A', '0.6');}),
+                borderColor: data5.map(function(item){return parties[item.party].colour.replace('A', '1');}),
+                borderWidth: 1
+            },{
+                label: 'Enthaltung',
+                data: data6.map(function(item){return item.value;}),
+                backgroundColor: data6.map(function(item){return parties[item.party].colour.replace('A', '0.3');}),
+                borderColor: data6.map(function(item){return parties[item.party].colour.replace('A', '1');}),
                 borderWidth: 1
             }]
             },
@@ -155,10 +200,13 @@ body{
             
                         options: {
                             scales: {
+                                xAxes: [{
+                                    stacked:true,
+                                    
+                                }],
                                 yAxes: [{
-                                    ticks: {
-                                        beginAtZero: true
-                                    }
+                                    stacked:true,
+                                    
                                 }]
                             }
                         }
