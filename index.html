@@ -75,12 +75,12 @@ body{
             return voteOptionIndex > 0;
         });
         //          | Zugriff auf Dataset    | Abstimmung   |Art der Stimme|Partei     
-        console.log(Array.from(voteOpt[1].childNodes).map((childNode)=> {
+        console.log(Array.from(voteOptions[1].childNodes).map((childNode)=> {
             return {'name':childNode.attributes.Identifier.value,'value':childNode.childElementCount};
         })); // Partei ident
         console.log(TheDocument.childNodes[1].childNodes[17].childNodes[1].childNodes[0].childElementCount); // Partei count
         
-        [
+        var x = [
             {'name': 'For', 'value': parent.childNodes[1].attributes.Number.nodeValue, 'colour': 'rgba(255, 99, 132, A)'},
             //{'name': 'Red', 'value': 1, 'colour': 'rgba(255, 99, 132, A)'},
             {'name': 'Against', 'value': parent.childNodes[2].attributes.Number.nodeValue, 'colour': 'rgba(54, 162, 235, A)'},
