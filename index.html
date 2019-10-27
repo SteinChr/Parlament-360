@@ -48,14 +48,9 @@
     </p>
 
     <select id="ddlViewBy" >
-        <option value="1" selected="selected">test1</option>
-        <option value="2">test2</option>
-        <option value="3">test3</option>
-        <option value="4">test4</option>
-        <option value="5">test5</option>
     </select>
 
-
+    <div id="box"></div>
 
 
 
@@ -125,6 +120,11 @@
             container.innerHTML= "";
             var canvas = document.createElement("canvas");
            
+            updateText(data.reduce((lastVal,party)=>{
+                console.log(party,lastVal);
+                return lastVal + party["Result.For"]+party["Result.Against"] +party["Result.Abstention"];
+            },0));
+
             canvas.width=400;
             canvas.height=400;
             container.append(canvas);
@@ -218,10 +218,16 @@
             });
             
             createDiagram1( getDiagramData(TheDocument,1));
+            
         });
         
         
-
+        function updateText(anzStimmen){
+            var total = 751;
+            var percent = Math.round((anzStimmen*100)/751*100)/100;
+            var box = document.getElementById("box");
+            box.innerHTML = "<b>Anzahl der EU Abgeordneten:" + total+ "<br> Anzahl der Stimmen:" + anzStimmen +"<br> Anwesenheit in Prozent:" + percent;
+        }
 
     </script>
 
