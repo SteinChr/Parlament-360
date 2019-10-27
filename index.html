@@ -51,8 +51,8 @@
     </h2>
 
     <select id="ddlViewBy" >
-        <option value="1">test1</option>
-        <option value="2" selected="selected">test2</option>
+        <option value="1" selected="selected">test1</option>
+        <option value="2">test2</option>
         <option value="3">test3</option>
         <option value="4">test4</option>
         <option value="5">test5</option>
@@ -73,17 +73,7 @@
 
 
 
-        // Create a connection to the file.
-        var Connect = new XMLHttpRequest();
-        // Define which file to open and
-        // send the request.
-        Connect.open("GET", "data.xml", false);
-        Connect.setRequestHeader("Content-Type", "text/xml");
-        Connect.send(null);
-        // Place the response in an XML document.
-        var TheDocument = Connect.responseXML;
-        // strUser als eine spezifische Abstimmung
-        console.log(TheDocument);
+        
 
 
         var partiesColors = {
@@ -186,13 +176,50 @@
             });
         }
 
-        
+        function getOption(index, text){
+            var option = document.createElement("option");
+            option.value=index;
+            option.text = text;
+            return option;
+        }
+
+        function createOptions(votelist){
+            var select = document.getElementById("ddlViewBy");
+            select.innerHTML= "";
+            
+            votelist.forEach((vote, index)=>{
+                select.append(getOption(index,vote.childNodes[0].textContent));
+            });
+        }
+
+        function loadData(){
+            // Create a connection to the file.
+            var Connect = new XMLHttpRequest();
+            // Define which file to open and
+            // send the request.
+            Connect.open("GET", "data.xml", false);
+            Connect.setRequestHeader("Content-Type", "text/xml");
+            Connect.send(null);
+            // Place the response in an XML document.
+            var TheDocument = Connect.responseXML;
+            // strUser als eine spezifische Abstimmung
+            console.log(TheDocument);
+            return TheDocument;
+        }
+
         window.addEventListener("DOMContentLoaded",()=>{
+            var TheDocument = loadData();
+            createOptions(Array.from(TheDocument.childNodes[1].childNodes)
+            .filter((childNode,index)=>{
+                return index>0;
+            }));
+            
             document.getElementById("ddlViewBy").addEventListener("change",(event)=>{
                 console.log(event);
                 
                 createDiagram1( getDiagramData(TheDocument,event.target.value));
             });
+            
             createDiagram1( getDiagramData(TheDocument,1));
         });
         
