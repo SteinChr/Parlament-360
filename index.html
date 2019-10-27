@@ -76,10 +76,28 @@ body{
         var voteOptions = Array.from(parent.childNodes).filter((voteOption, voteOptionIndex)=> {
             return voteOptionIndex > 0;
         });
-        //          | Zugriff auf Dataset    | Abstimmung   |Art der Stimme|Partei     
-        console.log(Array.from(voteOptions[1].childNodes).map((childNode)=> {
-            return {'name':childNode.attributes.Identifier.value,'value':childNode.childElementCount};
-        })); // Partei ident
+        
+        var votes = voteOptions.map((voteOption)=>{
+            return Array.from(voteOption.childNodes).map((party)=> {
+                return {'name':party.attributes.Identifier.value,[voteOption.nodeName]:party.childElementCount};
+            });
+        });
+        
+        
+        var allVotes = votes.flat();
+        var parties1 = allVotes
+            .map((voteOption) => (voteOption.name))
+            .filter((element, index, array) => (array.indexOf(element) === index))
+            .map((voteOption) => ({name: voteOption, "Result.For": 0, "Result.Against": 0, "Result.Abstention": 0}));
+        allVotes.forEach((vote) => {
+            var party = parties1.find((party) => (party.name === vote.name));
+            Object.assign(party, vote);
+        });
+        
+
+        
+        console.log(votes);
+        console.log(parties1);
         console.log(TheDocument.childNodes[1].childNodes[17].childNodes[1].childNodes[0].childElementCount); // Partei count
         
         var x = [
@@ -94,15 +112,15 @@ body{
         ];
 
 
-        var parties = {
-            'evp':{'name': 'EVP', 'colour': 'rgba(51, 153, 255, A)'},
-            'sd':{'name': 'S&D', 'colour': 'rgba(255, 0, 0, A)'},
-            'renew':{'name': 'Renew', 'colour': 'rgba(255, 255, 0, A)'},
-            'efa':{'name': 'Grüne/EFA', 'colour': 'rgba(0, 153, 0, A)'},
-            'id':{'name': 'ID', 'colour': 'rgba(0, 0, 0, A)'},
-            'ekr':{'name': 'EKR', 'colour': 'rgba(0, 0, 255, A)'},
-            'gue':{'name': 'GUE-NGL', 'colour': 'rgba(153, 0, 0, A)'},
-            'fralos':{'name': 'Fraktionslose', 'colour': 'rgba(204, 204, 204, A)'}
+        var partiesColors = {
+            'PPE':{'name': 'EVP', 'colour': 'rgba(51, 153, 255, A)'},
+            'S&D':{'name': 'S&D', 'colour': 'rgba(255, 0, 0, A)'},
+            'Renew':{'name': 'Renew', 'colour': 'rgba(255, 255, 0, A)'},
+            'Verts/ALE':{'name': 'Grüne/EFA', 'colour': 'rgba(0, 153, 0, A)'},
+            'ID':{'name': 'ID', 'colour': 'rgba(0, 0, 0, A)'},
+            'ECR':{'name': 'EKR', 'colour': 'rgba(0, 0, 255, A)'},
+            'GUE/NGL':{'name': 'GUE-NGL', 'colour': 'rgba(153, 0, 0, A)'},
+            'NI':{'name': 'Fraktionslose', 'colour': 'rgba(204, 204, 204, A)'}
         };
 
         var data1 = [
@@ -115,7 +133,7 @@ body{
             {'party': 'gue', 'dafuer': 1, 'dagegen': 2, 'enthaltung': 3},
             {'party': 'fralos', 'dafuer': 1, 'dagegen': 2, 'enthaltung': 3}
         ];
-
+        console.log(data1);
         var data2 = [
             {'party': 'evp', 'dafuer': 6, 'dagegen': 8, 'enthaltung': 3},
             {'party': 'sd', 'dafuer': 1, 'dagegen': 8, 'enthaltung': 8},
@@ -127,7 +145,7 @@ body{
             {'party': 'fralos', 'dafuer': 1, 'dagegen': 4, 'enthaltung': 4}
         ];
                 
-
+/*
 function createDiagram(chartID, data) {
     var ctx = document.getElementById(chartID).getContext('2d');
         var myChart = new Chart(ctx, {
@@ -171,11 +189,57 @@ function createDiagram(chartID, data) {
                             }
                         }
                     });
+}*/
+
+
+function createDiagram1(chartID, data) {
+    var ctx = document.getElementById(chartID).getContext('2d');
+        var myChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+            labels: data.map(function(item){return item.name;}),
+            datasets: [{
+                label: 'Dafür',
+                data: data.map(function(item){return item["Result.For"];}),
+                backgroundColor: data.map(function(item){return partiesColors[item.name].colour.replace('A', '0.9');}),
+                borderColor: data.map(function(item){return partiesColors[item.name].colour.replace('A', '1');}),
+
+                borderWidth: 1
+            },{
+                label: 'Dagegen',
+                data: data.map(function(item){return item["Result.Against"];}),
+                backgroundColor: data.map(function(item){return partiesColors[item.name].colour.replace('A', '0.6');}),
+                borderColor: data.map(function(item){return partiesColors[item.name].colour.replace('A', '1');}),
+
+                borderWidth: 1
+            },{
+                label: 'Enthaltung',
+                data: data.map(function(item){return item["Result.Abstention"];}),
+                backgroundColor: data.map(function(item){return partiesColors[item.name].colour.replace('A', '0.3');}),
+                borderColor: data.map(function(item){return partiesColors[item.name].colour.replace('A', '1');}),
+
+                borderWidth: 1
+            }]
+            },
+
+            
+                        options: {
+                            scales: {
+                                xAxes: [{
+                                    stacked:true,
+                                    
+                                }],
+                                yAxes: [{
+                                    stacked:true,
+                                }]
+                            }
+                        }
+                    });
 }
 
-
-                createDiagram('myChart', data1);
-                createDiagram('myChart2', data2);
+                //createDiagram('myChart', data1);
+                //createDiagram('myChart2', data2);
+                createDiagram1('myChart', parties1);
 
 
 
