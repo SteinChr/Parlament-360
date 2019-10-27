@@ -39,11 +39,19 @@ body{
     <h2>
         Die Grafiken
     </h2>
-    <select>
+    <select id="mySelect"
+    onchange="myFunction()">
             <option value="Fülltext 1">Fülltext 1</option>
             <option value="Fülltext 2">Fülltext 2</option>
 
     </select>
+    <p id="demo"></p>
+    <script>
+    function myFunction() {
+        var x =
+        document.getElementById("mySelect").value;
+    }
+    </script>
 
 
 
