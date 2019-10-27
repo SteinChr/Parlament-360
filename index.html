@@ -191,7 +191,7 @@
             document.getElementById("ddlViewBy").addEventListener("change",(event)=>{
                 console.log(event);
                 
-                createDiagram1( getDiagramData(TheDocument,event.target.selectedIndex));
+                createDiagram1( getDiagramData(TheDocument,event.target.value));
             });
             createDiagram1( getDiagramData(TheDocument,1));
         });
