@@ -1,71 +1,74 @@
 <!DOCTYPE html>
 <html>
-<head>
-        <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
-<meta charset="utf-8">
-<style>
-    h1{
-        font-size:45px ;
-        text-align:center ;
-    }
-    h2{
-        font-size:30px ;
-        text-align:center ;
-    }
-    p {
-        font-size:25px;
-    }
-body{
-    width:1060px;
-    margin:50px auto;
-   background-color: lightcyan;
-}
-</style>
 
-    
+<head>
+    <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
+    <meta charset="utf-8">
+    <style>
+        h1 {
+            font-size: 45px;
+            text-align: center;
+        }
+
+        h2 {
+            font-size: 30px;
+            text-align: center;
+        }
+
+        p {
+            font-size: 25px;
+        }
+
+        body {
+            width: 1060px;
+            margin: 50px auto;
+            background-color: lightcyan;
+        }
+    </style>
+
+
     <meta charset="utf-8">
 
     <!-- Load d3.js -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.bundle.min.js"></script>
     <title> Parlament 360.net</title>
 </head>
+
 <body>
     <h1>
         Parlament 360
     </h1>
     <p>
-            Wir haben bemerkt, dass viele Abgeordnete des Eu-Parlaments nicht zu Abstimmungen und Diskussionen erscheinen. Mit diesen Diagrammen wollen wir die Anwesenheit der Eu-Parlamentarier und wie die, die da sind, nach ihrer Fraktion aufgeteilt, abstimmen, zeigen.
+        Wir haben bemerkt, dass viele Abgeordnete des Eu-Parlaments nicht zu Abstimmungen und Diskussionen erscheinen.
+        Mit diesen Diagrammen wollen wir die Anwesenheit der Eu-Parlamentarier und wie die, die da sind, nach ihrer
+        Fraktion aufgeteilt, abstimmen, zeigen.
     </p>
     <h2>
         Die Grafiken
     </h2>
-    <select id="mySelect"
-    onchange="myFunction()">
-            <option value="Fülltext 1">Fülltext 1</option>
-            <option value="Fülltext 2">Fülltext 2</option>
 
+    <select id="ddlViewBy" >
+        <option value="1">test1</option>
+        <option value="2" selected="selected">test2</option>
+        <option value="3">test3</option>
+        <option value="4">test4</option>
+        <option value="5">test5</option>
     </select>
-    <p id="demo"></p>
+
+
+
+
+
+    <div style="width: 500px" id="container"></div>
+
+    <p>
+        Copyright Jugend Hackt 2019;
+        Erstellt von: Christian, Yusuf und Viktor.
+    </p>
     <script>
-    function myFunction() {
-        var x =
-        document.getElementById("mySelect").value;
-        document.getElementById("demo").innerHTML = "You selected " + x;
-    }
-    </script>
 
 
 
-
-     
-
-        <div style="width: 500px"><canvas id="myChart" width="400" height="400"></canvas></div>
-        <div style="width: 500px"><canvas id="myChart2" width="400" height="400"></canvas></div>
-        <p>
-            Copyright Jugend Hackt 2019; 
-            Erstellt von: Christian, Yusuf und Viktor.
-        </p>
-        <script>
 
         // Create a connection to the file.
         var Connect = new XMLHttpRequest();
@@ -76,186 +79,126 @@ body{
         Connect.send(null);
         // Place the response in an XML document.
         var TheDocument = Connect.responseXML;
-        // 17 als eine spezifische Abstimmung
+        // strUser als eine spezifische Abstimmung
         console.log(TheDocument);
-        console.log(TheDocument.childNodes[1].childNodes[17].childNodes[1].attributes.Number.nodeValue); // Parteien die dafür sind
-        console.log(TheDocument.childNodes[1].childNodes[17].childNodes[2].attributes.Number.nodeValue);
-        console.log(TheDocument.childNodes[1].childNodes[17].childNodes[3].attributes.Number.nodeValue);
-        var parent = TheDocument.childNodes[1].childNodes[17];
-        var voteOptions = Array.from(parent.childNodes).filter((voteOption, voteOptionIndex)=> {
-            return voteOptionIndex > 0;
-        });
-        
-        var votes = voteOptions.map((voteOption)=>{
-            return Array.from(voteOption.childNodes).map((party)=> {
-                return {'name':party.attributes.Identifier.value,[voteOption.nodeName]:party.childElementCount};
-            });
-        });
-        
-        
-        var allVotes = votes.flat();
-        var parties1 = allVotes
-            .map((voteOption) => (voteOption.name))
-            .filter((element, index, array) => (array.indexOf(element) === index))
-            .map((voteOption) => ({name: voteOption, "Result.For": 0, "Result.Against": 0, "Result.Abstention": 0}));
-        allVotes.forEach((vote) => {
-            var party = parties1.find((party) => (party.name === vote.name));
-            Object.assign(party, vote);
-        });
-        
-
-        
-        console.log(votes);
-        console.log(parties1);
-        console.log(TheDocument.childNodes[1].childNodes[17].childNodes[1].childNodes[0].childElementCount); // Partei count
-        
-        var x = [
-            {'name': 'For', 'value': parent.childNodes[1].attributes.Number.nodeValue, 'colour': 'rgba(255, 99, 132, A)'},
-            //{'name': 'Red', 'value': 1, 'colour': 'rgba(255, 99, 132, A)'},
-            {'name': 'Against', 'value': parent.childNodes[2].attributes.Number.nodeValue, 'colour': 'rgba(54, 162, 235, A)'},
-            
-            {'name': 'Abstantion', 'value': parent.childNodes[3].attributes.Number.nodeValue , 'colour': 'rgba(75, 192, 192, A)'},
-            {'name': 'Total', 'value': (parseInt(parent.childNodes[3].attributes.Number.nodeValue) + parseInt(parent.childNodes[2].attributes.Number.nodeValue)+parseInt(parent.childNodes[1].attributes.Number.nodeValue)), 'colour': 'rgba(255, 206, 86, A)'},
-            {'name': 'Purlple', 'value': 3, 'colour': 'rgba(153, 102, 255, A)'},
-            {'name': 'Orange', 'value': 15, 'colour': 'rgba(255, 159, 64, A)'}
-        ];
 
 
         var partiesColors = {
-            'PPE':{'name': 'EVP', 'colour': 'rgba(51, 153, 255, A)'},
-            'S&D':{'name': 'S&D', 'colour': 'rgba(255, 0, 0, A)'},
-            'Renew':{'name': 'Renew', 'colour': 'rgba(255, 255, 0, A)'},
-            'Verts/ALE':{'name': 'Grüne/EFA', 'colour': 'rgba(0, 153, 0, A)'},
-            'ID':{'name': 'ID', 'colour': 'rgba(0, 0, 0, A)'},
-            'ECR':{'name': 'EKR', 'colour': 'rgba(0, 0, 255, A)'},
-            'GUE/NGL':{'name': 'GUE-NGL', 'colour': 'rgba(153, 0, 0, A)'},
-            'NI':{'name': 'Fraktionslose', 'colour': 'rgba(204, 204, 204, A)'}
+            'PPE': { 'name': 'EVP', 'colour': 'rgba(51, 153, 255, A)' },
+            'S&D': { 'name': 'S&D', 'colour': 'rgba(255, 0, 0, A)' },
+            'Renew': { 'name': 'Renew', 'colour': 'rgba(255, 255, 0, A)' },
+            'Verts/ALE': { 'name': 'Grüne/EFA', 'colour': 'rgba(0, 153, 0, A)' },
+            'ID': { 'name': 'ID', 'colour': 'rgba(0, 0, 0, A)' },
+            'ECR': { 'name': 'EKR', 'colour': 'rgba(0, 0, 255, A)' },
+            'GUE/NGL': { 'name': 'GUE-NGL', 'colour': 'rgba(153, 0, 0, A)' },
+            'NI': { 'name': 'Fraktionslose', 'colour': 'rgba(204, 204, 204, A)' }
         };
 
-        var data1 = [
-            {'party': 'evp', 'dafuer': 1, 'dagegen': 2, 'enthaltung': 3},
-            {'party': 'sd', 'dafuer': 1, 'dagegen': 2, 'enthaltung': 3},
-            {'party': 'renew', 'dafuer': 1, 'dagegen': 2, 'enthaltung': 3},
-            {'party': 'efa', 'dafuer': 1, 'dagegen': 2, 'enthaltung': 3},
-            {'party': 'id', 'dafuer': 1, 'dagegen': 2, 'enthaltung': 3},
-            {'party': 'ekr', 'dafuer': 1, 'dagegen': 2, 'enthaltung': 3},
-            {'party': 'gue', 'dafuer': 1, 'dagegen': 2, 'enthaltung': 3},
-            {'party': 'fralos', 'dafuer': 1, 'dagegen': 2, 'enthaltung': 3}
-        ];
-        console.log(data1);
-        var data2 = [
-            {'party': 'evp', 'dafuer': 6, 'dagegen': 8, 'enthaltung': 3},
-            {'party': 'sd', 'dafuer': 1, 'dagegen': 8, 'enthaltung': 8},
-            {'party': 'renew', 'dafuer': 3, 'dagegen': 7, 'enthaltung': 5},
-            {'party': 'efa', 'dafuer': 1, 'dagegen': 2, 'enthaltung': 3},
-            {'party': 'id', 'dafuer': 2, 'dagegen': 6, 'enthaltung': 9},
-            {'party': 'ekr', 'dafuer': 1, 'dagegen': 2, 'enthaltung': 2},
-            {'party': 'gue', 'dafuer': 8, 'dagegen': 9, 'enthaltung': 3},
-            {'party': 'fralos', 'dafuer': 1, 'dagegen': 4, 'enthaltung': 4}
-        ];
+        function getDiagramData(Doc, strUser) {
+            console.log(Doc,strUser);
+            var parent = Doc.childNodes[1].childNodes[strUser];
+            if(!parent){
+                return;
+            }
+            var voteOptions = Array.from(parent.childNodes).filter((voteOption, voteOptionIndex) => {
+                return voteOptionIndex > 0;
+            });
+
+            var votes = voteOptions.map((voteOption) => {
+                return Array.from(voteOption.childNodes).map((party) => {
+                    console.log(party);
+                    return { 'name': party.attributes.Identifier.value, [voteOption.nodeName]: party.childElementCount };
+                });
+            });
+
+
+            var allVotes = votes.flat();
+            var parties1 = allVotes
+                .map((voteOption) => (voteOption.name))
+                .filter((element, index, array) => (array.indexOf(element) === index))
+                .map((voteOption) => ({ name: voteOption, "Result.For": 0, "Result.Against": 0, "Result.Abstention": 0 }))
+                .sort((a,b)=>{
+                return a.name>b.name;
+            });
+            allVotes.forEach((vote) => {
+                var party = parties1.find((party) => (party.name === vote.name));
+                Object.assign(party, vote);
+            });
+
+            return parties1;
+        }
+
+
+        function createDiagram1(data) {
+            console.log(data);
+            var container = document.getElementById("container");
+            container.innerHTML= "";
+            var canvas = document.createElement("canvas");
+           
+            canvas.width=400;
+            canvas.height=400;
+            container.append(canvas);
+
+            var ctx = canvas.getContext('2d');
+            var myChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: data.map(function (item) { return item.name; }),
+                    datasets: [{
+                        label: 'Dafür',
+                        data: data.map(function (item) { return item["Result.For"]; }),
+                        backgroundColor: data.map(function (item) { return partiesColors[item.name].colour.replace('A', '0.9'); }),
+                        borderColor: data.map(function (item) { return partiesColors[item.name].colour.replace('A', '1'); }),
+
+                        borderWidth: 1
+                    }, {
+                        label: 'Dagegen',
+                        data: data.map(function (item) { return item["Result.Against"]; }),
+                        backgroundColor: data.map(function (item) { return partiesColors[item.name].colour.replace('A', '0.6'); }),
+                        borderColor: data.map(function (item) { return partiesColors[item.name].colour.replace('A', '1'); }),
+
+                        borderWidth: 1
+                    }, {
+                        label: 'Enthaltung',
+                        data: data.map(function (item) { return item["Result.Abstention"]; }),
+                        backgroundColor: data.map(function (item) { return partiesColors[item.name].colour.replace('A', '0.3'); }),
+                        borderColor: data.map(function (item) { return partiesColors[item.name].colour.replace('A', '1'); }),
+
+                        borderWidth: 1
+                    }]
+                },
+
+
+                options: {
+                    scales: {
+                        xAxes: [{
+                            stacked: true,
+
+                        }],
+                        yAxes: [{
+                            stacked: true,
+                        }]
+                    }
+                }
+            });
+        }
+
+        
+        window.addEventListener("DOMContentLoaded",()=>{
+            document.getElementById("ddlViewBy").addEventListener("change",(event)=>{
+                console.log(event);
                 
-/*
-function createDiagram(chartID, data) {
-    var ctx = document.getElementById(chartID).getContext('2d');
-        var myChart = new Chart(ctx, {
-            type: 'bar',
-            data: {
-            labels: data.map(function(item){return parties[item.party].name;}),
-            datasets: [{
-                label: 'Dafür',
-                data: data.map(function(item){return item.dafuer;}),
-                backgroundColor: data.map(function(item){return parties[item.party].colour.replace('A', '0.9');}),
-                borderColor: data.map(function(item){return parties[item.party].colour.replace('A', '1');}),
-
-                borderWidth: 1
-            },{
-                label: 'Dagegen',
-                data: data.map(function(item){return item.dagegen;}),
-                backgroundColor: data.map(function(item){return parties[item.party].colour.replace('A', '0.6');}),
-                borderColor: data.map(function(item){return parties[item.party].colour.replace('A', '1');}),
-
-                borderWidth: 1
-            },{
-                label: 'Enthaltung',
-                data: data.map(function(item){return item.enthaltung;}),
-                backgroundColor: data.map(function(item){return parties[item.party].colour.replace('A', '0.3');}),
-                borderColor: data.map(function(item){return parties[item.party].colour.replace('A', '1');}),
-
-                borderWidth: 1
-            }]
-            },
-
-            
-                        options: {
-                            scales: {
-                                xAxes: [{
-                                    stacked:true,
-                                    
-                                }],
-                                yAxes: [{
-                                    stacked:true,
-                                }]
-                            }
-                        }
-                    });
-}*/
+                createDiagram1( getDiagramData(TheDocument,event.target.selectedIndex));
+            });
+            createDiagram1( getDiagramData(TheDocument,1));
+        });
+        
+        
 
 
-function createDiagram1(chartID, data) {
-    var ctx = document.getElementById(chartID).getContext('2d');
-        var myChart = new Chart(ctx, {
-            type: 'bar',
-            data: {
-            labels: data.map(function(item){return item.name;}),
-            datasets: [{
-                label: 'Dafür',
-                data: data.map(function(item){return item["Result.For"];}),
-                backgroundColor: data.map(function(item){return partiesColors[item.name].colour.replace('A', '0.9');}),
-                borderColor: data.map(function(item){return partiesColors[item.name].colour.replace('A', '1');}),
-
-                borderWidth: 1
-            },{
-                label: 'Dagegen',
-                data: data.map(function(item){return item["Result.Against"];}),
-                backgroundColor: data.map(function(item){return partiesColors[item.name].colour.replace('A', '0.6');}),
-                borderColor: data.map(function(item){return partiesColors[item.name].colour.replace('A', '1');}),
-
-                borderWidth: 1
-            },{
-                label: 'Enthaltung',
-                data: data.map(function(item){return item["Result.Abstention"];}),
-                backgroundColor: data.map(function(item){return partiesColors[item.name].colour.replace('A', '0.3');}),
-                borderColor: data.map(function(item){return partiesColors[item.name].colour.replace('A', '1');}),
-
-                borderWidth: 1
-            }]
-            },
-
-            
-                        options: {
-                            scales: {
-                                xAxes: [{
-                                    stacked:true,
-                                    
-                                }],
-                                yAxes: [{
-                                    stacked:true,
-                                }]
-                            }
-                        }
-                    });
-}
-
-                //createDiagram('myChart', data1);
-                //createDiagram('myChart2', data2);
-                createDiagram1('myChart', parties1);
+    </script>
 
 
+</body>
 
-                    </script>
-
-
-    </body>
 </html>
-
-
