@@ -103,139 +103,53 @@ body{
         };
 
         var data1 = [
-            {'party': 'evp', 'value': '1'},
-            {'party': 'sd', 'value': '3'},
-            {'party': 'renew', 'value': '5'},
-            {'party': 'efa', 'value': '4'},
-            {'party': 'id', 'value': '2'},
-            {'party': 'ekr', 'value': '4'},
-            {'party': 'gue', 'value': '7'},
-            {'party': 'fralos', 'value': '6'}
+            {'party': 'evp', 'dafuer': 1, 'dagegen': 2, 'enthaltung': 3},
+            {'party': 'sd', 'dafuer': 1, 'dagegen': 2, 'enthaltung': 3},
+            {'party': 'renew', 'dafuer': 1, 'dagegen': 2, 'enthaltung': 3},
+            {'party': 'efa', 'dafuer': 1, 'dagegen': 2, 'enthaltung': 3},
+            {'party': 'id', 'dafuer': 1, 'dagegen': 2, 'enthaltung': 3},
+            {'party': 'ekr', 'dafuer': 1, 'dagegen': 2, 'enthaltung': 3},
+            {'party': 'gue', 'dafuer': 1, 'dagegen': 2, 'enthaltung': 3},
+            {'party': 'fralos', 'dafuer': 1, 'dagegen': 2, 'enthaltung': 3}
         ];
 
         var data2 = [
-            {'party': 'evp', 'value': '15'},
-            {'party': 'sd', 'value': '32'},
-            {'party': 'renew', 'value': '64'},
-            {'party': 'efa', 'value': '78'},
-            {'party': 'id', 'value': '9'},
-            {'party': 'ekr', 'value': '100'},
-            {'party': 'gue', 'value': '50'},
-            {'party': 'fralos', 'value': '14'}
+            {'party': 'evp', 'dafuer': 6, 'dagegen': 8, 'enthaltung': 3},
+            {'party': 'sd', 'dafuer': 1, 'dagegen': 8, 'enthaltung': 8},
+            {'party': 'renew', 'dafuer': 3, 'dagegen': 7, 'enthaltung': 5},
+            {'party': 'efa', 'dafuer': 1, 'dagegen': 2, 'enthaltung': 3},
+            {'party': 'id', 'dafuer': 2, 'dagegen': 6, 'enthaltung': 9},
+            {'party': 'ekr', 'dafuer': 1, 'dagegen': 2, 'enthaltung': 2},
+            {'party': 'gue', 'dafuer': 8, 'dagegen': 9, 'enthaltung': 3},
+            {'party': 'fralos', 'dafuer': 1, 'dagegen': 4, 'enthaltung': 4}
         ];
+                
 
-        var data3 = [
-            {'party': 'evp', 'value': '42'},
-            {'party': 'sd', 'value': '23'},
-            {'party': 'renew', 'value': '74'},
-            {'party': 'efa', 'value': '82'},
-            {'party': 'id', 'value': '67'},
-            {'party': 'ekr', 'value': '3'},
-            {'party': 'gue', 'value': '21'},
-            {'party': 'fralos', 'value': '88'}
-        ];
-
-        var data4 = [
-            {'party': 'evp', 'value': '23'},
-            {'party': 'sd', 'value': '32'},
-            {'party': 'renew', 'value': '53'},
-            {'party': 'efa', 'value': '98'},
-            {'party': 'id', 'value': '1'},
-            {'party': 'ekr', 'value': '19'},
-            {'party': 'gue', 'value': '27'},
-            {'party': 'fralos', 'value': '33'}
-        ];
-
-        var data5 = [
-            {'party': 'evp', 'value': '88'},
-            {'party': 'sd', 'value': '87'},
-            {'party': 'renew', 'value': '86'},
-            {'party': 'efa', 'value': '23'},
-            {'party': 'id', 'value': '20'},
-            {'party': 'ekr', 'value': '9'},
-            {'party': 'gue', 'value': '3'},
-            {'party': 'fralos', 'value': '12'}
-        ];
-
-        var data6 = [
-            {'party': 'evp', 'value': '13'},
-            {'party': 'sd', 'value': '24'},
-            {'party': 'renew', 'value': '45'},
-            {'party': 'efa', 'value': '53'},
-            {'party': 'id', 'value': '51'},
-            {'party': 'ekr', 'value': '30'},
-            {'party': 'gue', 'value': '21'},
-            {'party': 'fralos', 'value': '55'}
-        ];
-        
-       
-
-                    var ctx2 = document.getElementById('myChart2').getContext('2d');
-        var myChart2 = new Chart(ctx2, {
-            type: 'bar',
-            data: {
-            labels: data1.map(function(item){return parties[item.party].name;}),
-            datasets: [{
-                label: 'Dafür',
-                data: data4.map(function(item){return item.value;}),
-                backgroundColor: data4.map(function(item){return parties[item.party].colour.replace('A', '0.9');}),
-                borderColor: data4.map(function(item){return parties[item.party].colour.replace('A', '1');}),
-                borderWidth: 1
-            },{
-                label: 'Dagegen',
-                data: data5.map(function(item){return item.value;}),
-                backgroundColor: data5.map(function(item){return parties[item.party].colour.replace('A', '0.6');}),
-                borderColor: data5.map(function(item){return parties[item.party].colour.replace('A', '1');}),
-                borderWidth: 1
-            },{
-                label: 'Enthaltung',
-                data: data6.map(function(item){return item.value;}),
-                backgroundColor: data6.map(function(item){return parties[item.party].colour.replace('A', '0.3');}),
-                borderColor: data6.map(function(item){return parties[item.party].colour.replace('A', '1');}),
-                borderWidth: 1
-            }]
-            },
-
-            
-                        options: {
-                            scales: {
-                                xAxes: [{
-                                    stacked:true,
-                                    
-                                }],
-                                yAxes: [{
-                                    stacked:true,
-                                    
-                                }]
-                            }
-                        }
-                    });
-
-function createDiagram(dataDafuer, dataDagegen, dataEnthaltung) {
-    var ctx = document.getElementById('myChart').getContext('2d');
+function createDiagram(chartID, data) {
+    var ctx = document.getElementById(chartID).getContext('2d');
         var myChart = new Chart(ctx, {
             type: 'bar',
             data: {
-            labels: dataDafuer.map(function(item){return parties[item.party].name;}),
+            labels: data.map(function(item){return parties[item.party].name;}),
             datasets: [{
                 label: 'Dafür',
-                data: dataDafuer.map(function(item){return item.value;}),
-                backgroundColor: dataDafuer.map(function(item){return parties[item.party].colour.replace('A', '0.9');}),
-                borderColor: dataDafuer.map(function(item){return parties[item.party].colour.replace('A', '1');}),
+                data: data.map(function(item){return item.dafuer;}),
+                backgroundColor: data.map(function(item){return parties[item.party].colour.replace('A', '0.9');}),
+                borderColor: data.map(function(item){return parties[item.party].colour.replace('A', '1');}),
 
                 borderWidth: 1
             },{
                 label: 'Dagegen',
-                data: dataDagegen.map(function(item){return item.value;}),
-                backgroundColor: dataDagegen.map(function(item){return parties[item.party].colour.replace('A', '0.6');}),
-                borderColor: dataDagegen.map(function(item){return parties[item.party].colour.replace('A', '1');}),
+                data: data.map(function(item){return item.dagegen;}),
+                backgroundColor: data.map(function(item){return parties[item.party].colour.replace('A', '0.6');}),
+                borderColor: data.map(function(item){return parties[item.party].colour.replace('A', '1');}),
 
                 borderWidth: 1
             },{
                 label: 'Enthaltung',
-                data: dataEnthaltung.map(function(item){return item.value;}),
-                backgroundColor: dataEnthaltung.map(function(item){return parties[item.party].colour.replace('A', '0.3');}),
-                borderColor: dataEnthaltung.map(function(item){return parties[item.party].colour.replace('A', '1');}),
+                data: data.map(function(item){return item.enthaltung;}),
+                backgroundColor: data.map(function(item){return parties[item.party].colour.replace('A', '0.3');}),
+                borderColor: data.map(function(item){return parties[item.party].colour.replace('A', '1');}),
 
                 borderWidth: 1
             }]
@@ -255,6 +169,12 @@ function createDiagram(dataDafuer, dataDagegen, dataEnthaltung) {
                         }
                     });
 }
+
+
+                createDiagram('myChart', data1);
+                createDiagram('myChart2', data2);
+
+
 
                     </script>
 
